@@ -1,6 +1,7 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { CTAOrbit } from "@/components/cta";
+import { DottedBackground } from "@/components/common/dottedbg";
 
 export function Hero() {
   const [orbitSize, setOrbitSize] = useState(800);
@@ -25,8 +26,9 @@ export function Hero() {
   }, []);
 
   return (
-    <div className="w-full pt-10 md:pt-20 lg:pt-32">
-      <div className="mx-auto max-w-7xl px-4 md:px-8">
+    <section className="relative w-full pt-10 md:pt-20 lg:pt-32">
+      <DottedBackground className="z-0" />
+      <div className="relative z-10 mx-auto max-w-7xl px-4 md:px-8">
         <h1 className="text-center text-2xl font-bold tracking-tight md:text-left md:text-4xl lg:text-6xl">
         One Platform for the Entire <br /> Construction Life cycle
         </h1>
@@ -46,7 +48,7 @@ export function Hero() {
           <CTAOrbit size={orbitSize} />
         </div>
       </div>
-    </div>
+    </section>
   );
 }
 
