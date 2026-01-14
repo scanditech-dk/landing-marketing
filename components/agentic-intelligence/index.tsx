@@ -79,31 +79,28 @@ export const AgenticIntelligence = () => {
           <Card>
             <div className="flex items-center gap-2">
               <FingerprintIcon />
-              <CardTitle>One Click Auth</CardTitle>
+              <CardTitle>Unified Security</CardTitle>
             </div>
             <CardDescription>
-              A drag-and-drop interface to create, connect, and configure agents
-              into logical workflows
+              Secure project data and digital assets with centralized encryption and enterprise-grade access control.
             </CardDescription>
           </Card>
           <Card>
             <div className="flex items-center gap-2">
               <RealtimeSyncIcon />
-              <CardTitle>Realtime Sync</CardTitle>
+              <CardTitle>Autonomous Sync</CardTitle>
             </div>
             <CardDescription>
-              Agents operate independently and coordinate tasks to complete
-              complex all goals
+              The platform automatically coordinates data across modules, keeping your entire project in sync without manual updates.
             </CardDescription>
           </Card>
           <Card>
             <div className="flex items-center gap-2">
               <SDKIcon />
-              <CardTitle>Custom Connector SDK</CardTitle>
+              <CardTitle>Total Scalability</CardTitle>
             </div>
             <CardDescription>
-              Run agent workflows in a sandbox to preview behavior, debug logic,
-              and test interactions
+              Use individual tools independently or connect them to the ecosystem for a fully integrated experience.
             </CardDescription>
           </Card>
         </div>

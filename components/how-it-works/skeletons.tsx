@@ -1,5 +1,9 @@
 "use client";
 import {
+  ProjectFlowLogo,
+  TimesyncLogo,
+  InspecLogo,
+  ServiceLogo,
   AnthropicLogo,
   ForkIcon,
   MetaLogo,
@@ -17,12 +21,12 @@ import { IntegrationsLogo } from "@/icons/bento-icons";
 
 export const DesignYourWorkflowSkeleton = () => {
   return (
-    <div className="mt-12 flex flex-col items-center">
+    <div className="flex flex-col items-center">
       <div className="relative">
         <Card
-          title="Slack"
-          subtitle="#standups"
-          logo={<SlackLogo />}
+          title="ProjectFlow"
+          subtitle="#Albertslund"
+          logo={<ProjectFlowLogo />}
           cta="Connected"
           tone="default"
         />
@@ -33,26 +37,26 @@ export const DesignYourWorkflowSkeleton = () => {
 
       <div className="mt-12 flex flex-row gap-4.5">
         <Card
-          title="Anthropic"
-          subtitle="Claude 4"
-          logo={<AnthropicLogo />}
-          cta="UI Generator"
+          title="Timesync"
+          subtitle="Attendance"
+          logo={<TimesyncLogo />}
+          cta="Time Tracker"
           tone="danger"
           delay={0.2}
         />
         <Card
-          title="Meta"
-          subtitle="Llama 2"
-          logo={<MetaLogo />}
-          cta="Text Generator"
+          title="InspecIQ"
+          subtitle="Zone 2"
+          logo={<InspecLogo />}
+          cta="Quality Assurance"
           tone="default"
           delay={0.4}
         />
         <Card
-          title="OpenAI"
-          subtitle="GPT-5"
-          logo={<OpenAILogo />}
-          cta="Code Generator"
+          title="WarrantyBot"
+          subtitle="Bylt AI"
+          logo={<ServiceLogo />}
+          cta="Due Date"
           tone="success"
           delay={0.6}
         />
@@ -226,64 +230,64 @@ export const DeployAndScaleSkeleton = () => {
 
   // Define deploy cards data for reusability
   const deployCards = [
-    { title: "deploy-dev-eu-324", subtitle: "2h ago", branch: "master" },
+    { title: "deploy-team-for-service", subtitle: "2h ago", branch: "master" },
     {
-      title: "deploy-prod-eu-128",
+      title: "zone-2-missing-tests",
       subtitle: "10m ago",
-      branch: "main",
+      branch: "fix/tests",
       variant: "success" as const,
     },
-    { title: "deploy-dev-us-445", subtitle: "45m ago", branch: "feature/auth" },
+    { title: "1th-missing-brandluking", subtitle: "45m ago", branch: "mangler/list" },
     {
-      title: "deploy-prod-ap-223",
+      title: "Skakt1-zone1-completed",
       subtitle: "1h ago",
-      branch: "main",
+      branch: "skakts",
       variant: "success" as const,
     },
     {
-      title: "deploy-dev-eu-891",
+      title: "ventilation-fix-zone3-byg1",
       subtitle: "2h ago",
-      branch: "fix/cache",
+      branch: "fix/ventilation",
       variant: "warning" as const,
     },
     {
-      title: "deploy-prod-us-337",
+      title: "ground-work-inspection",
       subtitle: "3h ago",
-      branch: "main",
+      branch: "inspections",
       variant: "success" as const,
     },
     {
-      title: "deploy-dev-ap-556",
+      title: "broken-foundation-repair",
       subtitle: "4h ago",
-      branch: "feat/api",
+      branch: "foundation/repair",
       variant: "danger" as const,
     },
     {
-      title: "deploy-dev-eu-672",
+      title: "broken-pipeline-fix",
       subtitle: "5h ago",
-      branch: "feat/search",
+      branch: "plumbing/fix",
       variant: "default" as const,
     },
     {
-      title: "deploy-prod-ap-445",
+      title: "rooms-ready-for-paint-zone4",
       subtitle: "6h ago",
-      branch: "main",
+      branch: "painter",
       variant: "success" as const,
     },
     {
-      title: "deploy-dev-us-891",
+      title: "windows-installation-delay",
       subtitle: "7h ago",
       branch: "fix/perf",
       variant: "warning" as const,
     },
     {
-      title: "deploy-prod-eu-223",
+      title: "no access-to-byg3-site",
       subtitle: "8h ago",
       branch: "main",
       variant: "success" as const,
     },
     {
-      title: "deploy-dev-ap-337",
+      title: "construction-analytics-report",
       subtitle: "9h ago",
       branch: "feat/analytics",
       variant: "default" as const,

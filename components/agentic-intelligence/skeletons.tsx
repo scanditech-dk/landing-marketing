@@ -453,9 +453,11 @@ export const WorkflowCarousel = () => {
           animate={{ filter: "blur(0px)", opacity: 1 }}
           exit={{ filter: "blur(10px)", opacity: 0 }}
           transition={{ duration: 0.5 }}
-          className="w-full h-80 overflow-hidden"
+          className="w-full h-80"
         >
-          {skeletons[activeIndex].component}
+          <div className={`h-full ${skeletons[activeIndex].id === "deploy" ? "overflow-hidden" : ""}`}>
+            {skeletons[activeIndex].component}
+          </div>
         </motion.div>
       </AnimatePresence>
     </div>

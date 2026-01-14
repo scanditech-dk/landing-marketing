@@ -4,7 +4,7 @@ import { CTA, CTAOrbit } from "@/components/cta";
 import { DivideX } from "@/components/divide";
 import { FAQs } from "@/components/faqs";
 import { Hero } from "@/components/hero-2";
-import { HowItWorks } from "@/components/how-it-works";
+
 import { LogoCloud } from "@/components/logo-cloud";
 import { Pricing } from "@/components/pricing";
 import { Security } from "@/components/security";
@@ -24,8 +24,6 @@ export default function Home() {
       <LogoCloud />
       <DivideX />
       <AgenticIntelligence />
-      <DivideX />
-      <HowItWorks />
       <DivideX />
       <UseCases />
       <DivideX />
