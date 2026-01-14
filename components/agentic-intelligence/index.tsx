@@ -30,25 +30,25 @@ export const AgenticIntelligence = () => {
   return (
     <Container className="border-divide border-x">
       <div className="flex flex-col items-center py-16">
-        <Badge text="Features" />
+        
         <SectionHeading className="mt-4">
-          Built for Agentic Intelligence
+          One Platform. One Source of Truth.
         </SectionHeading>
 
         <SubHeading as="p" className="mx-auto mt-6 max-w-lg px-2">
-          Build, test and deploy AI agents with a powerful visual interface
-          designed for technical teams
+          Bylt isn’t just a tool—it’s your project’s nervous system. Our integrated ecosystem ensures every module, stakeholder, and data point syncs to a single, unified brain..
         </SubHeading>
         <div className="w-full mt-16">
           <Card className="relative w-full max-w-none overflow-hidden">
             <div className="pointer-events-none absolute inset-0 h-full w-full bg-[radial-gradient(var(--color-dots)_1px,transparent_1px)] mask-radial-from-10% [background-size:10px_10px]"></div>
             <div className="flex items-center gap-2">
               <NativeIcon />
-              <CardTitle>Native Tools Integration</CardTitle>
+              <CardTitle>Unified Activity Stream</CardTitle>
             </div>
             <CardDescription>
-              Track real-time activity of agents with detailed records of
-              triggers, tools used, outcomes, and timestamps.
+              Stay in sync with every move. Bylt automatically captures project actions and outcomes,
+              <br />
+              giving you a living history of your project without the manual tracking.
             </CardDescription>
             <NativeToolsIntegrationSkeleton />
           </Card>
@@ -57,22 +57,20 @@ export const AgenticIntelligence = () => {
           <Card className="overflow-hidden mask-b-from-80%">
             <div className="flex items-center gap-2">
               <BrainIcon />
-              <CardTitle>LLM Model Selector</CardTitle>
+              <CardTitle>Adaptive Project Intelligence</CardTitle>
             </div>
             <CardDescription>
-              Track real-time activity of agents with detailed records of
-              triggers, tools used, outcomes, and timestamps.
+              Harness built-in AI, tailored to the complexities of your project. Seamlessly scale your teams capabilities with native intelligence that automates routine tasks and accelerates decision-making.
             </CardDescription>
             <LLMModelSelectorSkeleton />
           </Card>
           <Card className="overflow-hidden mask-b-from-80%">
             <div className="flex items-center gap-2">
               <MouseBoxIcon />
-              <CardTitle>Text to workflow builder</CardTitle>
+              <CardTitle>Zero-Friction Collaboration</CardTitle>
             </div>
             <CardDescription>
-              Preview and debug workflow logic in a safe sandbox before
-              deploying, helping you iterate with confidence.
+              Bylt eliminates communication silos and prevents project delays, ensuring total alignment from day one.
             </CardDescription>
             <TextToWorkflowBuilderSkeleton />
           </Card>

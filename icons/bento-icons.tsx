@@ -580,3 +580,69 @@ export const CositngIcon = (
     </svg>
   );
 };
+
+export const OwnersIcon = (
+  props: React.SVGProps<SVGSVGElement>) => {
+  return (
+    <svg
+      width="16"
+      height="17"
+      viewBox="0 0 16 17"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      {...props}
+    >
+      <path
+        d="M3.542 6.375v5.667m3.187-5.667v5.667m3.542-5.667v5.667m3.187-5.667v5.667M2.125 13.175v.567c0 .396 0 .595.077.746a.7.7 0 0 0 .31.31c.151.077.35.077.746.077h10.484c.396 0 .595 0 .746-.077a.7.7 0 0 0 .31-.31c.077-.151.077-.35.077-.746v-.567c0-.397 0-.595-.077-.747a.7.7 0 0 0-.31-.31c-.151-.076-.35-.076-.746-.076H3.258c-.396 0-.595 0-.746.077a.7.7 0 0 0-.31.31c-.077.151-.077.35-.077.746M8.255 2.18 3.011 3.344c-.316.07-.475.106-.593.191a.7.7 0 0 0-.237.295c-.057.134-.057.296-.057.62v.792c0 .396 0 .595.077.746a.7.7 0 0 0 .31.31c.151.077.35.077.746.077h10.484c.396 0 .595 0 .746-.077a.7.7 0 0 0 .31-.31c.077-.151.077-.35.077-.746V4.45c0-.325 0-.487-.057-.62a.7.7 0 0 0-.237-.296c-.118-.085-.277-.12-.593-.19L8.746 2.18a2 2 0 0 0-.184-.035 1 1 0 0 0-.124 0 2 2 0 0 0-.184.035"
+        stroke="currentColor"
+        strokeWidth="1.33333"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+};
+
+export const FieldIcon = (
+  props: React.SVGProps<SVGSVGElement>) => {
+  return (
+    <svg
+      width="16"
+      height="17"
+      viewBox="0 0 16 17"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      {...props}
+    >
+      <path
+        d="M6.375 10.98H5.312c-.988 0-1.482 0-1.885.121A2.83 2.83 0 0 0 1.54 12.99c-.122.402-.122.896-.122 1.885m8.854-9.562a3.188 3.188 0 1 1-6.375 0 3.188 3.188 0 0 1 6.375 0m-2.48 9.562 2.197-.628c.106-.03.158-.045.207-.067a.7.7 0 0 0 .124-.073c.043-.032.082-.07.16-.148l4.573-4.574a1.252 1.252 0 0 0-1.77-1.77l-4.574 4.573a2 2 0 0 0-.148.16.7.7 0 0 0-.073.123 2 2 0 0 0-.068.207z"
+        stroke="currentColor"
+        strokeWidth="1.33333"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+};
+
+export const ByltintiLogo = (
+  props: React.SVGProps<SVGSVGElement>) => {
+  return (
+    <svg
+      width="16"
+      height="17"
+      viewBox="0 0 16 17"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      {...props}
+    >
+      <path
+d="M11.634 0H3.588v2.564h6.097l2.076 2.327-2.076 2.326H3.588V2.564H0v11.87h3.588V9.783h6.097l2.076 2.326-2.076 2.327H3.588V17h8.046L16 12.108 12.78 8.5 16 4.89z"
+        stroke="currentColor"
+        strokeWidth="1.33333"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+};

@@ -3,17 +3,15 @@
 import React from "react";
 import { cn } from "@/lib/utils";
 import {
-  AnthropicLogo,
-  AppleIcon,
-  FacebookIcon,
-  GoogleIcon,
-  LinearLogo,
-  MetaLogo,
-  NotionLogo,
-  OpenAILogo,
-  SlackLogo,
-  SupabaseLogo,
+  TenderHubLogo,
+  IntelliBidLogo,
+  TimesyncLogo,
+  InspecLogo,
+  ProjectFlowLogo,
+  MRMSLogo,
+  ServiceLogo,
 } from "@/icons/general";
+import { ByltintiLogo } from "@/icons/bento-icons";
 import { Container } from "./container";
 import { SectionHeading } from "./seciton-heading";
 import { Button } from "./button";
@@ -51,19 +49,13 @@ export const CTAOrbit: React.FC<CTAOrbitProps> = ({
   numRings = 3,
 }) => {
   const logos = [
-    SupabaseLogo,
-    OpenAILogo,
-    MetaLogo,
-    SlackLogo,
-    NotionLogo,
-    LinearLogo,
-    AnthropicLogo,
-    SupabaseLogo,
-    OpenAILogo,
-    MetaLogo,
-    GoogleIcon,
-    FacebookIcon,
-    AppleIcon,
+    TenderHubLogo,
+    IntelliBidLogo,
+    TimesyncLogo,
+    InspecLogo,
+    ProjectFlowLogo,
+    MRMSLogo,
+    ServiceLogo,
   ];
   const total = logos.length;
 
@@ -194,6 +186,11 @@ export const CTAOrbit: React.FC<CTAOrbitProps> = ({
       {Array.from({ length: numRings }, (_, idx) => numRings - 1 - idx).map(
         (ringIndex) => renderRing(ringIndex),
       )}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-20">
+        <div className="shadow-aceternity flex size-14 items-center justify-center rounded-md bg-white dark:bg-neutral-950">
+          <ByltintiLogo className="size-8 shrink-0" />
+        </div>
+      </div>
     </div>
   );
 };
