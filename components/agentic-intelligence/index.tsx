@@ -16,7 +16,7 @@ import {
 import {
   LLMModelSelectorSkeleton,
   NativeToolsIntegrationSkeleton,
-  TextToWorkflowBuilderSkeleton,
+  WorkflowCarousel,
 } from "./skeletons";
 
 type Tab = {
@@ -72,7 +72,7 @@ export const AgenticIntelligence = () => {
             <CardDescription>
               Bylt eliminates communication silos and prevents project delays, ensuring total alignment from day one.
             </CardDescription>
-            <TextToWorkflowBuilderSkeleton />
+            <WorkflowCarousel />
           </Card>
         </div>
         <div className="grid grid-cols-1 gap-10 md:grid-cols-3">

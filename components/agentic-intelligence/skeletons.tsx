@@ -30,7 +30,7 @@ import {
   TenderHubLogo,
   TimesyncLogo,
 } from "@/icons/general";
-import { motion, useMotionValue, useTransform } from "motion/react";
+import { motion, useMotionValue, useTransform, AnimatePresence } from "motion/react";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
 import { useState, useEffect, useRef, useMemo } from "react";
@@ -39,6 +39,10 @@ import { LogoSVG } from "../logo";
 import { IconBlock } from "../common/icon-block";
 import { Card } from "../tech-card";
 import { Scale } from "../scale";
+import {
+  DesignYourWorkflowSkeleton as ImportedDesignYourWorkflowSkeleton,
+  DeployAndScaleSkeleton as ImportedDeployAndScaleSkeleton,
+} from "../how-it-works/skeletons";
 
 export const LLMModelSelectorSkeleton = () => {
   const models = [
@@ -419,6 +423,41 @@ const AssistantMessage = ({
           {isActive && !isComplete && <span className="animate-pulse">|</span>}
         </div>
       </div>
+    </div>
+  );
+};
+
+export const WorkflowCarousel = () => {
+  const skeletons = [
+    { id: "design", component: <ImportedDesignYourWorkflowSkeleton /> },
+    { id: "deploy", component: <ImportedDeployAndScaleSkeleton /> },
+  ];
+
+  const [activeIndex, setActiveIndex] = useState(0);
+  const DURATION = 8000; // 8 seconds
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setActiveIndex((prev) => (prev + 1) % skeletons.length);
+    }, DURATION);
+
+    return () => clearInterval(interval);
+  }, [skeletons.length]);
+
+  return (
+    <div className="relative mx-auto mt-2 w-[85%] p-4">
+      <AnimatePresence mode="wait">
+        <motion.div
+          key={skeletons[activeIndex].id}
+          initial={{ filter: "blur(10px)", opacity: 0 }}
+          animate={{ filter: "blur(0px)", opacity: 1 }}
+          exit={{ filter: "blur(10px)", opacity: 0 }}
+          transition={{ duration: 0.5 }}
+          className="w-full h-80 overflow-hidden"
+        >
+          {skeletons[activeIndex].component}
+        </motion.div>
+      </AnimatePresence>
     </div>
   );
 };
@@ -815,357 +854,5 @@ const TextIconBlock = ({
       </span>
       {children}
     </div>
-  );
-};
-
-// Components imported from how-it-works/skeletons
-
-export const DesignYourWorkflowSkeleton = () => {
-  return (
-    <div className="mt-12 flex flex-col items-center">
-      <div className="relative">
-        <Card
-          title="Slack"
-          subtitle="#standups"
-          logo={<SlackLogo />}
-          cta="Connected"
-          tone="default"
-        />
-        <LeftSVG className="absolute top-12 -left-32" />
-        <RightSVG className="absolute top-12 -right-32" />
-        <CenterSVG className="absolute top-24 right-[107px]" />
-      </div>
-
-      <div className="mt-12 flex flex-row gap-4.5">
-        <Card
-          title="Anthropic"
-          subtitle="Claude 4"
-          logo={<AnthropicLogo />}
-          cta="UI Generator"
-          tone="danger"
-          delay={0.2}
-        />
-        <Card
-          title="Meta"
-          subtitle="Llama 2"
-          logo={<MetaLogo />}
-          cta="Text Generator"
-          tone="default"
-          delay={0.4}
-        />
-      </div>
-    </div>
-  );
-};
-
-export const DeployAndScaleSkeleton = () => {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const [containerHeight, setContainerHeight] = useState(0);
-
-  // Define deploy cards data for reusability
-  const deployCards = [
-    { title: "deploy-dev-eu-324", subtitle: "2h ago", branch: "master" },
-    {
-      title: "deploy-prod-eu-128",
-      subtitle: "10m ago",
-      branch: "main",
-      variant: "success" as const,
-    },
-    { title: "deploy-dev-us-445", subtitle: "45m ago", branch: "feature/auth" },
-    {
-      title: "deploy-prod-ap-223",
-      subtitle: "1h ago",
-      branch: "main",
-      variant: "success" as const,
-    },
-    {
-      title: "deploy-dev-eu-891",
-      subtitle: "2h ago",
-      branch: "fix/cache",
-      variant: "warning" as const,
-    },
-    {
-      title: "deploy-prod-us-337",
-      subtitle: "3h ago",
-      branch: "main",
-      variant: "success" as const,
-    },
-    {
-      title: "deploy-dev-ap-556",
-      subtitle: "4h ago",
-      branch: "feat/api",
-      variant: "danger" as const,
-    },
-    {
-      title: "deploy-dev-eu-672",
-      subtitle: "5h ago",
-      branch: "feat/search",
-      variant: "default" as const,
-    },
-  ];
-
-  useEffect(() => {
-    if (containerRef.current) {
-      setContainerHeight(containerRef.current.scrollHeight);
-    }
-  }, []);
-
-  const scrollX = useMotionValue(0);
-  const translateX = useTransform(scrollX, [0, 100], [0, -100]);
-
-  return (
-    <motion.div
-      ref={containerRef}
-      className="relative mt-12 flex flex-col items-center justify-center overflow-hidden rounded-lg bg-gray-50 p-8 dark:bg-neutral-950"
-    >
-      <h3 className="text-charcoal-900 mb-8 text-center text-xl font-semibold dark:text-white">
-        Deploy and Scale
-      </h3>
-      <div className="w-full max-w-2xl space-y-2 overflow-hidden">
-        {deployCards.map((card, index) => (
-          <motion.div
-            key={index}
-            initial={{ opacity: 0, x: -50 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5, delay: index * 0.1 }}
-          >
-            <DeployCard {...card} />
-          </motion.div>
-        ))}
-      </div>
-    </motion.div>
-  );
-};
-
-const DeployCard = ({
-  variant = "default",
-  title,
-  subtitle,
-  branch,
-}: {
-  variant?: "default" | "danger" | "success" | "warning";
-  title: string;
-  subtitle: string;
-  branch: string;
-}) => {
-  return (
-    <div className="mx-auto flex w-full max-w-sm items-center justify-between rounded-lg p-3">
-      <div className="flex items-center gap-2">
-        <div
-          className={cn(
-            "flex h-6 w-6 items-center justify-center rounded-md",
-            variant === "default" && "bg-gray-200",
-            variant === "danger" && "bg-red-200",
-            variant === "success" && "bg-green-200",
-            variant === "warning" && "bg-yellow-200",
-          )}
-        >
-          <ForkIcon
-            className={cn(
-              "h-4 w-4",
-              variant === "default" && "text-gray-500",
-              variant === "danger" && "text-red-500",
-              variant === "success" && "text-green-500",
-              variant === "warning" && "text-yellow-500",
-            )}
-          />
-        </div>
-        <span className="text-charcoal-700 text-xs font-medium sm:text-sm">
-          {title}
-        </span>
-      </div>
-      <div className="ml-2 flex flex-row items-center gap-2">
-        <span className="text-charcoal-700 text-xs font-normal">
-          {subtitle}
-        </span>
-        <div className="size-1 rounded-full bg-gray-400"></div>
-        <span className="text-charcoal-700 text-xs font-normal">{branch}</span>
-      </div>
-    </div>
-  );
-};
-
-const LeftSVG = (props: React.SVGProps<SVGSVGElement>) => {
-  return (
-    <motion.svg
-      width="128"
-      height="97"
-      viewBox="0 0 128 97"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-      initial={{
-        opacity: 0,
-      }}
-      animate={{
-        opacity: 1,
-      }}
-      transition={{
-        duration: 1,
-      }}
-      className={props.className}
-    >
-      <mask id="path-1-inside-1_557_1106" fill="var(--color-line)">
-        <path d="M127.457 0.0891113L127.576 95.9138L0.939007 96.0718L0.839368 16.2472C0.828338 7.41063 7.98283 0.238242 16.8194 0.227212L127.457 0.0891113Z" />
-      </mask>
-      <path
-        d="M127.457 0.0891113L127.576 95.9138L127.457 0.0891113ZM-0.0609919 96.0731L-0.160632 16.2484C-0.172351 6.85959 7.4293 -0.761068 16.8181 -0.772787L16.8206 1.22721C8.53637 1.23755 1.82903 7.96166 1.83937 16.2459L1.93901 96.0706L-0.0609919 96.0731ZM-0.160632 16.2484C-0.172351 6.85959 7.4293 -0.761068 16.8181 -0.772787L127.455 -0.910888L127.458 1.08911L16.8206 1.22721C8.53637 1.23755 1.82903 7.96166 1.83937 16.2459L-0.160632 16.2484ZM127.576 95.9138L0.939007 96.0718L127.576 95.9138Z"
-        fill="#EAEDF1"
-        mask="url(#path-1-inside-1_557_1106)"
-      />
-      <path
-        d="M127.457 0.0891113L127.576 95.9138L127.457 0.0891113ZM-0.0609919 96.0731L-0.160632 16.2484C-0.172351 6.85959 7.4293 -0.761068 16.8181 -0.772787L16.8206 1.22721C8.53637 1.23755 1.82903 7.96166 1.83937 16.2459L1.93901 96.0706L-0.0609919 96.0731ZM-0.160632 16.2484C-0.172351 6.85959 7.4293 -0.761068 16.8181 -0.772787L127.455 -0.910888L127.458 1.08911L16.8206 1.22721C8.53637 1.23755 1.82903 7.96166 1.83937 16.2459L-0.160632 16.2484ZM127.576 95.9138L0.939007 96.0718L127.576 95.9138Z"
-        fill="url(#gradient-one)"
-        mask="url(#path-1-inside-1_557_1106)"
-      />
-      <defs>
-        <motion.linearGradient
-          id="gradient-one"
-          initial={{
-            x1: "100%",
-            x2: "90%",
-            y1: "90%",
-            y2: "80%",
-          }}
-          animate={{
-            x1: "20%",
-            x2: "0%",
-            y1: "90%",
-            y2: "220%",
-          }}
-          transition={{
-            duration: 5,
-            repeat: Infinity,
-            repeatDelay: 2,
-          }}
-          gradientUnits="userSpaceOnUse"
-        >
-          <stop stopColor="var(--color-line)" stopOpacity="0.5" offset="0" />
-          <stop stopColor="#5787FF" stopOpacity="1" offset="0.5" />
-          <stop stopColor="var(--color-line)" stopOpacity="0" offset="1" />
-        </motion.linearGradient>
-      </defs>
-    </motion.svg>
-  );
-};
-
-const RightSVG = (props: React.SVGProps<SVGSVGElement>) => {
-  return (
-    <motion.svg
-      width="128"
-      height="96"
-      viewBox="0 0 128 96"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-      initial={{
-        opacity: 0,
-      }}
-      animate={{
-        opacity: 1,
-      }}
-      transition={{
-        duration: 1,
-      }}
-      className={props.className}
-    >
-      <mask id="path-1-inside-1_557_1107" fill="var(--color-line)">
-        <path d="M0.619629 0L0.500018 95.8247L127.137 95.9827L127.237 16.1581C127.248 7.32152 120.093 0.149131 111.257 0.138101L0.619629 0Z" />
-      </mask>
-      <path
-        d="M0.619629 0L0.500018 95.8247L0.619629 0ZM128.137 95.984L128.237 16.1593C128.249 6.77047 120.647 -0.850179 111.258 -0.861898L111.256 1.1381C119.54 1.14844 126.247 7.87255 126.237 16.1568L126.137 95.9815L128.137 95.984ZM128.237 16.1593C128.249 6.77047 120.647 -0.850179 111.258 -0.861898L0.620877 -0.999999L0.618381 0.999999L111.256 1.1381C119.54 1.14844 126.247 7.87255 126.237 16.1568L128.237 16.1593ZM0.500018 95.8247L127.137 95.9827L0.500018 95.8247Z"
-        fill="#EAEDF1"
-        mask="url(#path-1-inside-1_557_1107)"
-      />
-      <path
-        d="M0.619629 0L0.500018 95.8247L0.619629 0ZM128.137 95.984L128.237 16.1593C128.249 6.77047 120.647 -0.850179 111.258 -0.861898L111.256 1.1381C119.54 1.14844 126.247 7.87255 126.237 16.1568L126.137 95.9815L128.137 95.984ZM128.237 16.1593C128.249 6.77047 120.647 -0.850179 111.258 -0.861898L0.620877 -0.999999L0.618381 0.999999L111.256 1.1381C119.54 1.14844 126.247 7.87255 126.237 16.1568L128.237 16.1593ZM0.500018 95.8247L127.137 95.9827L0.500018 95.8247Z"
-        fill="url(#gradient-two)"
-        mask="url(#path-1-inside-1_557_1107)"
-      />
-      <defs>
-        <motion.linearGradient
-          id="gradient-two"
-          initial={{
-            x1: "-10%",
-            x2: "0%",
-            y1: "0%",
-            y2: "0%",
-          }}
-          animate={{
-            x1: "100%",
-            x2: "110%",
-            y1: "110%",
-            y2: "140%",
-          }}
-          transition={{
-            duration: 5,
-            repeat: Infinity,
-            repeatDelay: 2,
-          }}
-          gradientUnits="userSpaceOnUse"
-        >
-          <stop stopColor="white" stopOpacity="0.5" offset="0" />
-          <stop stopColor="#F17463" stopOpacity="1" offset="0.5" />
-          <stop stopColor="white" stopOpacity="0" offset="1" />
-        </motion.linearGradient>
-      </defs>
-    </motion.svg>
-  );
-};
-
-const CenterSVG = (props: React.SVGProps<SVGSVGElement>) => {
-  return (
-    <motion.svg
-      width="2"
-      height="56"
-      viewBox="0 0 2 56"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-      initial={{
-        opacity: 0,
-      }}
-      animate={{
-        opacity: 1,
-      }}
-      transition={{
-        duration: 1,
-      }}
-      className={props.className}
-    >
-      <line x1="1" y1="56" x2="1" stroke="var(--color-line)" strokeWidth="2" />
-      <line
-        x1="1"
-        y1="56"
-        x2="1"
-        stroke="url(#gradient-three)"
-        strokeWidth="1"
-      />
-      <defs>
-        <motion.linearGradient
-          id="gradient-three"
-          initial={{
-            x1: "0%",
-            x2: "0%",
-            y1: "-100%",
-            y2: "-90%",
-          }}
-          animate={{
-            x1: "0%",
-            x2: "0%",
-            y1: "90%",
-            y2: "100%",
-          }}
-          transition={{
-            duration: 5,
-            repeat: Infinity,
-            repeatDelay: 2,
-          }}
-          gradientUnits="userSpaceOnUse"
-        >
-          <stop stopColor="var(--color-line)" stopOpacity="1" offset="0" />
-          <stop stopColor="#F17463" stopOpacity="0.5" offset="0.5" />
-          <stop stopColor="#F17463" stopOpacity="0" offset="1" />
-        </motion.linearGradient>
-      </defs>
-    </motion.svg>
   );
 };
