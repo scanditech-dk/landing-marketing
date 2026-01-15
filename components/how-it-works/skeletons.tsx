@@ -121,7 +121,7 @@ export const DesignYourWorkflowSkeleton = ({
 };
 
 type StatItem = {
-  number: string;
+  number?: string;
   label: string;
 };
 
@@ -142,14 +142,14 @@ export const ConnectYourTooklsSkeleton = ({
   rightText = "An automation engine to calculate bids and generate proposals.",
   topText,
   leftStats = [
-    { number: "160", label: "Planning Phase" },
-    { number: "240", label: "Projects Award" },
-    { number: "900", label: "Approved Contractors" },
+    { label: "Project discovery" },
+    { label: "Verified contractors" },
+    { label: "Private tenders" },
   ],
   rightStats = [
-    { number: "160", label: "Drawing Processed" },
-    { number: "59", label: "Proposal Prepared" },
-    { number: "26", label: "Bidding Completed" },
+    { label: "Automated take-offs" },
+    { label: "Instant bid scenarios" },
+    { label: "Proposal generation" },
   ],
   topStats,
 }: {
@@ -195,6 +195,7 @@ export const ConnectYourTooklsSkeleton = ({
     headerLogo,
     cardClassName,
     delay,
+    logoPosition = "-top-4 -right-4",
   }: {
     title: string;
     textValue: string;
@@ -203,6 +204,7 @@ export const ConnectYourTooklsSkeleton = ({
     headerLogo?: React.ReactNode;
     cardClassName?: string;
     delay: number;
+    logoPosition?: string;
   }) => (
     <motion.div
       initial={{ y: -20, opacity: 0 }}
@@ -213,9 +215,9 @@ export const ConnectYourTooklsSkeleton = ({
         cardClassName,
       )}
     >
-      <div className="absolute -top-4 -right-4 flex h-14 w-14 items-center justify-center rounded-lg bg-white shadow-xl">
+      <div className={cn("absolute flex h-14 w-14 items-center justify-center rounded-lg bg-white shadow-xl", logoPosition)}>
         <Scale />
-        {cornerLogo ?? <TenderHubLogo className="relative z-20 h-8 w-8" />}
+        {cornerLogo ? <div className="relative z-20">{cornerLogo}</div> : <TenderHubLogo className="relative z-20 h-8 w-8" />}
       </div>
       <div className="mt-12 flex items-center gap-2">
         {headerLogo ?? <IntegrationsLogo />}
@@ -256,27 +258,19 @@ export const ConnectYourTooklsSkeleton = ({
             key={`${item.number}-${item.label}`}
             className="mt-2 flex items-center gap-2"
           >
-            <motion.div
-              initial={{
-                width: "0%",
-              }}
-              animate={{
-                width: `${randomWidth}%`,
-              }}
-              transition={{
-                duration: 4,
-                delay: index * 0.2,
-                ease: "easeInOut",
-                repeat: Infinity,
-                repeatType: "reverse",
-              }}
-              className="h-4 w-full rounded-full bg-gray-200 dark:bg-neutral-800"
-            />
+            <div className="h-2 w-2 rounded-full bg-blue-500" />
             <span className="whitespace-nowrap text-[10px] text-neutral-500 dark:text-neutral-400">
-              <span className="font-medium">{item.number}</span> {item.label}
+              {item.number && <span className="font-medium">{item.number}</span>}
+              {item.number ? " " : null}
+              {item.label}
             </span>
           </div>
         ))}
+      </div>
+      <div className="mt-4 flex justify-end">
+        <span className="text-[10px] text-neutral-400 dark:text-neutral-500 cursor-pointer hover:text-neutral-600 dark:hover:text-neutral-400">
+          Explore →
+        </span>
       </div>
     </motion.div>
   );
@@ -289,6 +283,7 @@ export const ConnectYourTooklsSkeleton = ({
     headerLogo,
     cardClassName,
     delay,
+    logoPosition = "-top-4 -left-4",
   }: {
     title: string;
     textValue: string;
@@ -297,6 +292,7 @@ export const ConnectYourTooklsSkeleton = ({
     headerLogo?: React.ReactNode;
     cardClassName?: string;
     delay: number;
+    logoPosition?: string;
   }) => (
     <motion.div
       initial={{ y: -20, opacity: 0 }}
@@ -307,9 +303,9 @@ export const ConnectYourTooklsSkeleton = ({
         cardClassName,
       )}
     >
-      <div className="absolute -top-4 -left-4 flex h-14 w-14 items-center justify-center rounded-lg bg-white shadow-xl dark:bg-neutral-800">
+      <div className={cn("absolute flex h-14 w-14 items-center justify-center rounded-lg bg-white shadow-xl dark:bg-neutral-800", logoPosition)}>
         <Scale />
-        {cornerLogo ?? <IntelliBidLogo className="relative z-20 h-8 w-8" />}
+        {cornerLogo ? <div className="relative z-20">{cornerLogo}</div> : <IntelliBidLogo className="relative z-20 h-8 w-8" />}
       </div>
       <div className="mt-12 flex items-center gap-2">
         {headerLogo ?? <IntegrationsLogo className="dark:text-neutral-200" />}
@@ -329,27 +325,19 @@ export const ConnectYourTooklsSkeleton = ({
             key={`${item.number}-${item.label}-right`}
             className="mt-2 flex items-center gap-2"
           >
-            <motion.div
-              initial={{
-                width: `${20 + Math.random() * 20}%`,
-              }}
-              animate={{
-                width: `${70 + Math.random() * 30}%`,
-              }}
-              transition={{
-                duration: 4,
-                delay: index * 0.2,
-                ease: "easeInOut",
-                repeat: Infinity,
-                repeatType: "reverse",
-              }}
-              className="h-4 w-full rounded-full bg-gray-200 dark:bg-neutral-800"
-            />
+            <div className="h-2 w-2 rounded-full bg-blue-500" />
             <span className="whitespace-nowrap text-[10px] text-neutral-500 dark:text-neutral-400">
-              <span className="font-medium">{item.number}</span> {item.label}
+              {item.number && <span className="font-medium">{item.number}</span>}
+              {item.number ? " " : null}
+              {item.label}
             </span>
           </div>
         ))}
+      </div>
+      <div className="mt-4 flex justify-end">
+        <span className="text-[10px] text-neutral-400 dark:text-neutral-500 cursor-pointer hover:text-neutral-600 dark:hover:text-neutral-400">
+          Explore →
+        </span>
       </div>
     </motion.div>
   );
@@ -365,7 +353,7 @@ export const ConnectYourTooklsSkeleton = ({
           headerLogo: resolvedTopHeaderLogo,
           delay: 0,
         })}
-        <div className="mt-8 flex w-full max-w-[520px] justify-between">
+        <div className="mt-8 flex flex-col md:flex-row w-full max-w-[520px] md:justify-between gap-4 md:gap-0">
           {renderLeftCard({
             title: leftTitle,
             textValue: text,
@@ -374,6 +362,7 @@ export const ConnectYourTooklsSkeleton = ({
             headerLogo: leftHeaderLogo,
             cardClassName: "md:translate-x-0",
             delay: 0.2,
+            logoPosition: "-top-4 -left-4",
           })}
           {renderRightCard({
             title: rightTitle,
@@ -383,6 +372,7 @@ export const ConnectYourTooklsSkeleton = ({
             headerLogo: rightHeaderLogo,
             cardClassName: "md:translate-x-0",
             delay: 0.4,
+            logoPosition: "-top-4 -right-4",
           })}
         </div>
       </div>

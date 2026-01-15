@@ -24,6 +24,17 @@ export const Timeline = ({ data }: { data: TimelineEntry[] }) => {
     if (ref.current) {
       const rect = ref.current.getBoundingClientRect();
       setHeight(rect.height);
+      
+      // Use ResizeObserver to update height when content changes
+      const resizeObserver = new ResizeObserver(() => {
+        const updatedRect = ref.current?.getBoundingClientRect();
+        if (updatedRect) {
+          setHeight(updatedRect.height);
+        }
+      });
+      
+      resizeObserver.observe(ref.current);
+      return () => resizeObserver.disconnect();
     }
   }, [ref]);
 
