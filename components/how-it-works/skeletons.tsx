@@ -128,14 +128,19 @@ type StatItem = {
 export const ConnectYourTooklsSkeleton = ({
   compact = false,
   className,
+  layout = "side-by-side",
   leftCornerLogo,
   rightCornerLogo,
   leftHeaderLogo,
   rightHeaderLogo,
+  topCornerLogo,
+  topHeaderLogo,
   leftTitle = "TenderHub",
   rightTitle = "IntelliBid",
+  topTitle,
   leftText = "A central place to find projects and connect with verified contractors",
   rightText = "An automation engine to calculate bids and generate proposals.",
+  topText,
   leftStats = [
     { number: "160", label: "Planning Phase" },
     { number: "240", label: "Projects Award" },
@@ -146,29 +151,243 @@ export const ConnectYourTooklsSkeleton = ({
     { number: "59", label: "Proposal Prepared" },
     { number: "26", label: "Bidding Completed" },
   ],
+  topStats,
 }: {
   compact?: boolean;
   className?: string;
+  layout?: "side-by-side" | "stacked";
   leftCornerLogo?: React.ReactNode;
   rightCornerLogo?: React.ReactNode;
   leftHeaderLogo?: React.ReactNode;
   rightHeaderLogo?: React.ReactNode;
+  topCornerLogo?: React.ReactNode;
+  topHeaderLogo?: React.ReactNode;
   leftTitle?: string;
   rightTitle?: string;
+  topTitle?: string;
   leftText?: string;
   rightText?: string;
+  topText?: string;
   leftStats?: StatItem[];
   rightStats?: StatItem[];
+  topStats?: StatItem[];
 }) => {
   const text = leftText;
   const [mounted, setMounted] = useState(false);
   const randomWidth = useMemo(() => Math.random() * 100, [mounted]);
+  const resolvedTopTitle = topTitle ?? leftTitle;
+  const resolvedTopText = topText ?? leftText;
+  const resolvedTopStats = topStats ?? leftStats;
+  const resolvedTopCornerLogo = topCornerLogo ?? leftCornerLogo;
+  const resolvedTopHeaderLogo = topHeaderLogo ?? leftHeaderLogo;
 
   useEffect(() => {
     setMounted(true);
   }, []);
 
   if (!mounted) return null;
+
+  const renderLeftCard = ({
+    title,
+    textValue,
+    stats,
+    cornerLogo,
+    headerLogo,
+    cardClassName,
+    delay,
+  }: {
+    title: string;
+    textValue: string;
+    stats: StatItem[];
+    cornerLogo?: React.ReactNode;
+    headerLogo?: React.ReactNode;
+    cardClassName?: string;
+    delay: number;
+  }) => (
+    <motion.div
+      initial={{ y: -20, opacity: 0 }}
+      animate={{ y: 0, opacity: 1 }}
+      transition={{ duration: 0.5, delay }}
+      className={cn(
+        "relative h-70 w-60 rounded-2xl border-t border-gray-300 bg-white p-4 shadow-2xl dark:border-neutral-700 dark:bg-neutral-900",
+        cardClassName,
+      )}
+    >
+      <div className="absolute -top-4 -right-4 flex h-14 w-14 items-center justify-center rounded-lg bg-white shadow-xl">
+        <Scale />
+        {cornerLogo ?? <TenderHubLogo className="relative z-20 h-8 w-8" />}
+      </div>
+      <div className="mt-12 flex items-center gap-2">
+        {headerLogo ?? <IntegrationsLogo />}
+        <span className="text-charcoal-700 text-sm font-medium dark:text-neutral-200">
+          {title}
+        </span>
+      </div>
+      <DivideX className="mt-2" />
+
+      <div className="mt-4 flex items-center justify-between gap-2">
+        <div className="flex items-center gap-2">
+          <span className="text-charcoal-700 text-[10px] leading-loose font-normal md:text-xs dark:text-neutral-200">
+            {textValue.split(/(\s+)/).map((word, index) => (
+              <motion.span
+                key={index}
+                initial={{
+                  opacity: 0,
+                }}
+                animate={{
+                  opacity: 1,
+                }}
+                transition={{
+                  duration: 0.2,
+                  delay: index * 0.02,
+                  ease: "linear",
+                }}
+                className="inline-block"
+              >
+                {word === " " ? "\u00A0" : word}
+              </motion.span>
+            ))}
+          </span>
+        </div>
+      </div>
+      <div className="mt-2 flex flex-col">
+        {stats.map((item, index) => (
+          <div
+            key={`${item.number}-${item.label}`}
+            className="mt-2 flex items-center gap-2"
+          >
+            <motion.div
+              initial={{
+                width: "0%",
+              }}
+              animate={{
+                width: `${randomWidth}%`,
+              }}
+              transition={{
+                duration: 4,
+                delay: index * 0.2,
+                ease: "easeInOut",
+                repeat: Infinity,
+                repeatType: "reverse",
+              }}
+              className="h-4 w-full rounded-full bg-gray-200 dark:bg-neutral-800"
+            />
+            <span className="whitespace-nowrap text-[10px] text-neutral-500 dark:text-neutral-400">
+              <span className="font-medium">{item.number}</span> {item.label}
+            </span>
+          </div>
+        ))}
+      </div>
+    </motion.div>
+  );
+
+  const renderRightCard = ({
+    title,
+    textValue,
+    stats,
+    cornerLogo,
+    headerLogo,
+    cardClassName,
+    delay,
+  }: {
+    title: string;
+    textValue: string;
+    stats: StatItem[];
+    cornerLogo?: React.ReactNode;
+    headerLogo?: React.ReactNode;
+    cardClassName?: string;
+    delay: number;
+  }) => (
+    <motion.div
+      initial={{ y: -20, opacity: 0 }}
+      animate={{ y: 0, opacity: 1 }}
+      transition={{ duration: 0.5, delay }}
+      className={cn(
+        "relative h-70 w-60 rounded-2xl border-t border-gray-300 bg-white p-4 shadow-2xl dark:border-neutral-700 dark:bg-neutral-900",
+        cardClassName,
+      )}
+    >
+      <div className="absolute -top-4 -left-4 flex h-14 w-14 items-center justify-center rounded-lg bg-white shadow-xl dark:bg-neutral-800">
+        <Scale />
+        {cornerLogo ?? <IntelliBidLogo className="relative z-20 h-8 w-8" />}
+      </div>
+      <div className="mt-12 flex items-center gap-2">
+        {headerLogo ?? <IntegrationsLogo className="dark:text-neutral-200" />}
+        <span className="text-charcoal-700 text-xs font-medium md:text-sm dark:text-neutral-200">
+          {title}
+        </span>
+      </div>
+      <DivideX className="mt-2" />
+      <div className="mt-4">
+        <span className="text-charcoal-700 text-[10px] leading-loose font-normal md:text-xs dark:text-neutral-200">
+          {textValue}
+        </span>
+      </div>
+      <div className="mt-2 flex flex-col">
+        {stats.map((item, index) => (
+          <div
+            key={`${item.number}-${item.label}-right`}
+            className="mt-2 flex items-center gap-2"
+          >
+            <motion.div
+              initial={{
+                width: `${20 + Math.random() * 20}%`,
+              }}
+              animate={{
+                width: `${70 + Math.random() * 30}%`,
+              }}
+              transition={{
+                duration: 4,
+                delay: index * 0.2,
+                ease: "easeInOut",
+                repeat: Infinity,
+                repeatType: "reverse",
+              }}
+              className="h-4 w-full rounded-full bg-gray-200 dark:bg-neutral-800"
+            />
+            <span className="whitespace-nowrap text-[10px] text-neutral-500 dark:text-neutral-400">
+              <span className="font-medium">{item.number}</span> {item.label}
+            </span>
+          </div>
+        ))}
+      </div>
+    </motion.div>
+  );
+
+  if (layout === "stacked") {
+    return (
+      <div className={cn("relative flex h-full w-full flex-col items-center", className)}>
+        {renderLeftCard({
+          title: resolvedTopTitle,
+          textValue: resolvedTopText,
+          stats: resolvedTopStats,
+          cornerLogo: resolvedTopCornerLogo,
+          headerLogo: resolvedTopHeaderLogo,
+          delay: 0,
+        })}
+        <div className="mt-8 flex w-full max-w-[520px] justify-between">
+          {renderLeftCard({
+            title: leftTitle,
+            textValue: text,
+            stats: leftStats,
+            cornerLogo: leftCornerLogo,
+            headerLogo: leftHeaderLogo,
+            cardClassName: "md:translate-x-0",
+            delay: 0.2,
+          })}
+          {renderRightCard({
+            title: rightTitle,
+            textValue: rightText,
+            stats: rightStats,
+            cornerLogo: rightCornerLogo,
+            headerLogo: rightHeaderLogo,
+            cardClassName: "md:translate-x-0",
+            delay: 0.4,
+          })}
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div
@@ -178,81 +397,15 @@ export const ConnectYourTooklsSkeleton = ({
         className,
       )}
     >
-      <motion.div
-        initial={{ y: -20, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        transition={{ duration: 0.5 }}
-        className="relative h-70 w-60 -translate-x-2 rounded-2xl border-t border-gray-300 bg-white p-4 shadow-2xl md:translate-x-0 dark:border-neutral-700 dark:bg-neutral-900"
-      >
-        <div className="absolute -top-4 -right-4 flex h-14 w-14 items-center justify-center rounded-lg bg-white shadow-xl">
-          <Scale />
-          {leftCornerLogo ?? (
-            <TenderHubLogo className="relative z-20 h-8 w-8" />
-          )}
-        </div>
-        <div className="mt-12 flex items-center gap-2">
-          {leftHeaderLogo ?? <IntegrationsLogo />}
-          <span className="text-charcoal-700 text-sm font-medium dark:text-neutral-200">
-            {leftTitle}
-          </span>
-        </div>
-        <DivideX className="mt-2" />
-
-        <div className="mt-4 flex items-center justify-between gap-2">
-          <div className="flex items-center gap-2">
-            <span className="text-charcoal-700 text-[10px] leading-loose font-normal md:text-xs dark:text-neutral-200">
-              {text.split(/(\s+)/).map((word, index) => (
-                <motion.span
-                  key={index}
-                  initial={{
-                    opacity: 0,
-                  }}
-                  animate={{
-                    opacity: 1,
-                  }}
-                  transition={{
-                    duration: 0.2,
-                    delay: index * 0.02,
-                    ease: "linear",
-                  }}
-                  className="inline-block"
-                >
-                  {word === " " ? "\u00A0" : word}
-                </motion.span>
-              ))}
-            </span>
-          </div>
-        </div>
-        <div className="mt-2 flex flex-col">
-          {leftStats.map((item, index) => (
-            <div
-              key={`${item.number}-${item.label}`}
-              className="mt-2 flex items-center gap-2"
-            >
-              <motion.div
-                initial={{
-                  width: "0%",
-                }}
-                animate={{
-                  width: `${randomWidth}%`,
-                }}
-                transition={{
-                  duration: 4,
-                  delay: index * 0.2,
-                  ease: "easeInOut",
-                  repeat: Infinity,
-                  repeatType: "reverse",
-                }}
-                className="h-4 w-full rounded-full bg-gray-200 dark:bg-neutral-800"
-              />
-              <span className="whitespace-nowrap text-[10px] text-neutral-500 dark:text-neutral-400">
-                <span className="font-medium">{item.number}</span> {item.label}
-              </span>
-            </div>
-          ))}
-        </div>
-      </motion.div>
-
+      {renderLeftCard({
+        title: leftTitle,
+        textValue: text,
+        stats: leftStats,
+        cornerLogo: leftCornerLogo,
+        headerLogo: leftHeaderLogo,
+        cardClassName: "-translate-x-2 md:translate-x-0",
+        delay: 0,
+      })}
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
@@ -263,61 +416,15 @@ export const ConnectYourTooklsSkeleton = ({
         <div className="h-[2px] w-38 bg-blue-500" />
         <div className="size-3 rounded-full border-2 border-blue-500 bg-white dark:bg-neutral-800" />
       </motion.div>
-      <motion.div
-        initial={{ y: -20, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        transition={{ duration: 0.5, delay: 1 }}
-        className="relative h-70 w-60 translate-x-10 rounded-2xl border-t border-gray-300 bg-white p-4 shadow-2xl md:translate-x-0 dark:border-neutral-700 dark:bg-neutral-900"
-      >
-        <div className="absolute -top-4 -left-4 flex h-14 w-14 items-center justify-center rounded-lg bg-white shadow-xl dark:bg-neutral-800">
-          <Scale />
-          {rightCornerLogo ?? (
-            <IntelliBidLogo className="relative z-20 h-8 w-8" />
-          )}
-        </div>
-        <div className="mt-12 flex items-center gap-2">
-          {rightHeaderLogo ?? (
-            <IntegrationsLogo className="dark:text-neutral-200" />
-          )}
-          <span className="text-charcoal-700 text-xs font-medium md:text-sm dark:text-neutral-200">
-            {rightTitle}
-          </span>
-        </div>
-        <DivideX className="mt-2" />
-        <div className="mt-4">
-          <span className="text-charcoal-700 text-[10px] leading-loose font-normal md:text-xs dark:text-neutral-200">
-            {rightText}
-          </span>
-        </div>
-        <div className="mt-2 flex flex-col">
-          {rightStats.map((item, index) => (
-            <div
-              key={`${item.number}-${item.label}-right`}
-              className="mt-2 flex items-center gap-2"
-            >
-              <motion.div
-                initial={{
-                  width: `${20 + Math.random() * 20}%`,
-                }}
-                animate={{
-                  width: `${70 + Math.random() * 30}%`,
-                }}
-                transition={{
-                  duration: 4,
-                  delay: index * 0.2,
-                  ease: "easeInOut",
-                  repeat: Infinity,
-                  repeatType: "reverse",
-                }}
-                className="h-4 w-full rounded-full bg-gray-200 dark:bg-neutral-800"
-              />
-              <span className="whitespace-nowrap text-[10px] text-neutral-500 dark:text-neutral-400">
-                <span className="font-medium">{item.number}</span> {item.label}
-              </span>
-            </div>
-          ))}
-        </div>
-      </motion.div>
+      {renderRightCard({
+        title: rightTitle,
+        textValue: rightText,
+        stats: rightStats,
+        cornerLogo: rightCornerLogo,
+        headerLogo: rightHeaderLogo,
+        cardClassName: "translate-x-10 md:translate-x-0",
+        delay: 1,
+      })}
     </div>
   );
 };

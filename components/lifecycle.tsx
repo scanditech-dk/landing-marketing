@@ -2,6 +2,7 @@ import React from "react";
 import { Container } from "@/components/container";
 import { ConnectYourTooklsSkeleton } from "@/components/how-it-works/skeletons";
 import { Timeline } from "@/components/ui/timeline";
+import { InspecLogo, ProjectFlowLogo, TimesyncLogo } from "@/icons/general";
 
 export function LifecycleTimeline() {
   const data = [
@@ -27,8 +28,19 @@ export function LifecycleTimeline() {
           <p className="mb-8 text-sm font-semibold text-neutral-900 md:text-base dark:text-neutral-100">
             Autonomous Field Management
           </p>
-          <div className="relative mx-auto h-80 w-full overflow-hidden sm:w-160 lg:mx-0 lg:max-h-[370px]">
+          <div className="relative mx-auto w-full overflow-visible sm:w-160 lg:mx-0">
             <ConnectYourTooklsSkeleton
+              layout="stacked"
+              topCornerLogo={<ProjectFlowLogo className="h-8 w-8 text-white" />}
+              leftCornerLogo={<TimesyncLogo className="h-8 w-8 text-white" />}
+              rightCornerLogo={<InspecLogo className="h-8 w-8 text-white" />}
+              topTitle="Project Flow"
+              topText="A central place to find projects and connect with verified contractors"
+              topStats={[
+                { number: "160", label: "Planning Phase" },
+                { number: "240", label: "Projects Award" },
+                { number: "900", label: "Approved Contractors" },
+              ]}
               leftTitle="TenderHub"
               rightTitle="IntelliBid"
               leftText="A central place to find projects and connect with verified contractors"
