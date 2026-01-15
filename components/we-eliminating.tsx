@@ -83,7 +83,7 @@ const FlippingText = ({
               transition={{ duration: 0.3 }}
               className="inline-block"
             >
-              {char}
+              {char === " " ? "\u00A0" : char}
             </motion.span>
           ))}
       </span>
@@ -112,7 +112,7 @@ const FlippingText = ({
 };
 
 export function TextAnimationFlippingWords() {
-  const words = ["Data silos", "Manual measurements", "Constant delays", "Measurements", "Web GL"];
+  const words = ["Data silos", "Manual measurements", "Constant delays", "Manual Tagging", "Regulation Ambiguity"];
 
   return (
     <section className="relative w-full">
@@ -120,12 +120,14 @@ export function TextAnimationFlippingWords() {
       <div className="relative mx-auto grid w-full max-w-7xl grid-cols-1 items-center gap-10 px-4 py-20 lg:grid-cols-2 md:px-8">
       <div className="relative z-10">
         <h1 className="mb-4 text-left text-2xl font-bold md:text-5xl">
-          We are replacing <FlippingText words={words} />
+          Bylt is replacing 
+          <br />
+          <FlippingText words={words} />
         </h1>
         <p className="mt-4 text-left text-base text-neutral-600 dark:text-neutral-400">
-          Create stunning animations that bring your website to life. Elevate
-          your user experience with smooth transitions and eye-catching effects
-          that captivate visitors and keep them engaged.
+          We replace fragmented legacy processes with a 
+          unified intelligence engine that ensures every action is precise,
+           compliant, and governed by industry standards.
         </p>
 
         <LogoCloud />

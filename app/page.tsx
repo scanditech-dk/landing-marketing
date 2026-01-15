@@ -9,6 +9,7 @@ import { Pricing } from "@/components/pricing";
 import { Security } from "@/components/security";
 import { Testimonials } from "@/components/testimonials";
 import { UseCases } from "@/components/use-cases";
+import { LifecycleTimeline } from "@/components/lifecycle";
 import { TextAnimationFlippingWords } from "@/components/we-eliminating";
 
 import { getSEOTags } from "@/lib/seo";
@@ -26,6 +27,8 @@ export default function Home() {
       <AgenticIntelligence />
       <DivideX />
       <TextAnimationFlippingWords />
+      <DivideX />
+      <LifecycleTimeline />
       <DivideX />
       <UseCases />
       <DivideX />
