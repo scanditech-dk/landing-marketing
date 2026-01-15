@@ -21,60 +21,146 @@ import { Scale } from "../scale";
 import { LogoSVG } from "../logo";
 import { IntegrationsLogo } from "@/icons/bento-icons";
 
-export const DesignYourWorkflowSkeleton = () => {
+type WorkflowCardConfig = {
+  title: string;
+  subtitle: string;
+  logo: React.ReactNode;
+  cta: string;
+  tone: "default" | "danger" | "success";
+  delay?: number;
+};
+
+export const DesignYourWorkflowSkeleton = ({
+  primaryCard,
+  secondaryCards,
+  className,
+}: {
+  primaryCard?: WorkflowCardConfig;
+  secondaryCards?: WorkflowCardConfig[];
+  className?: string;
+}) => {
+  const defaultPrimaryCard: WorkflowCardConfig = {
+    title: "ProjectFlow",
+    subtitle: "#Albertslund",
+    logo: <ProjectFlowLogo />,
+    cta: "Connected",
+    tone: "default",
+  };
+
+  const defaultSecondaryCards: WorkflowCardConfig[] = [
+    {
+      title: "Timesync",
+      subtitle: "Attendance",
+      logo: <TimesyncLogo />,
+      cta: "Time Tracker",
+      tone: "danger",
+      delay: 0.2,
+    },
+    {
+      title: "InspecIQ",
+      subtitle: "Zone 2",
+      logo: <InspecLogo />,
+      cta: "Quality Assurance",
+      tone: "default",
+      delay: 0.4,
+    },
+    {
+      title: "WarrantyBot",
+      subtitle: "Bylt AI",
+      logo: <ServiceLogo />,
+      cta: "Due Date",
+      tone: "success",
+      delay: 0.6,
+    },
+  ];
+
+  const resolvedPrimary = primaryCard ?? defaultPrimaryCard;
+  const resolvedSecondary = secondaryCards ?? defaultSecondaryCards;
+  const isTwoUp = resolvedSecondary.length === 2;
+
   return (
-    <div className="flex flex-col items-center">
+    <div className={cn("flex flex-col items-center", className)}>
       <div className="relative">
         <Card
-          title="ProjectFlow"
-          subtitle="#Albertslund"
-          logo={<ProjectFlowLogo />}
-          cta="Connected"
-          tone="default"
+          title={resolvedPrimary.title}
+          subtitle={resolvedPrimary.subtitle}
+          logo={resolvedPrimary.logo}
+          cta={resolvedPrimary.cta}
+          tone={resolvedPrimary.tone}
         />
-        <LeftSVG className="absolute top-12 -left-32" />
-        <RightSVG className="absolute top-12 -right-32" />
-        <CenterSVG className="absolute top-24 right-[107px]" />
+        <LeftSVG className={cn("absolute top-12", isTwoUp ? "-left-16" : "-left-32")} />
+        <RightSVG className={cn("absolute top-12", isTwoUp ? "-right-16" : "-right-32")} />
+        <CenterSVG
+          className={cn(
+            "absolute top-24",
+            isTwoUp ? "left-1/2 -translate-x-1/2" : "right-[107px]",
+          )}
+        />
       </div>
 
-      <div className="mt-12 flex flex-row gap-4.5">
-        <Card
-          title="Timesync"
-          subtitle="Attendance"
-          logo={<TimesyncLogo />}
-          cta="Time Tracker"
-          tone="danger"
-          delay={0.2}
-        />
-        <Card
-          title="InspecIQ"
-          subtitle="Zone 2"
-          logo={<InspecLogo />}
-          cta="Quality Assurance"
-          tone="default"
-          delay={0.4}
-        />
-        <Card
-          title="WarrantyBot"
-          subtitle="Bylt AI"
-          logo={<ServiceLogo />}
-          cta="Due Date"
-          tone="success"
-          delay={0.6}
-        />
+      <div
+        className={cn(
+          "mt-12 flex flex-row",
+          isTwoUp ? "w-full max-w-[520px] justify-between" : "gap-4.5",
+        )}
+      >
+        {resolvedSecondary.map((card, index) => (
+          <Card
+            key={`${card.title}-${index}`}
+            title={card.title}
+            subtitle={card.subtitle}
+            logo={card.logo}
+            cta={card.cta}
+            tone={card.tone}
+            delay={card.delay ?? (index + 1) * 0.2}
+          />
+        ))}
       </div>
     </div>
   );
 };
 
+type StatItem = {
+  number: string;
+  label: string;
+};
+
 export const ConnectYourTooklsSkeleton = ({
   compact = false,
   className,
+  leftCornerLogo,
+  rightCornerLogo,
+  leftHeaderLogo,
+  rightHeaderLogo,
+  leftTitle = "TenderHub",
+  rightTitle = "IntelliBid",
+  leftText = "A central place to find projects and connect with verified contractors",
+  rightText = "An automation engine to calculate bids and generate proposals.",
+  leftStats = [
+    { number: "160", label: "Planning Phase" },
+    { number: "240", label: "Projects Award" },
+    { number: "900", label: "Approved Contractors" },
+  ],
+  rightStats = [
+    { number: "160", label: "Drawing Processed" },
+    { number: "59", label: "Proposal Prepared" },
+    { number: "26", label: "Bidding Completed" },
+  ],
 }: {
   compact?: boolean;
   className?: string;
+  leftCornerLogo?: React.ReactNode;
+  rightCornerLogo?: React.ReactNode;
+  leftHeaderLogo?: React.ReactNode;
+  rightHeaderLogo?: React.ReactNode;
+  leftTitle?: string;
+  rightTitle?: string;
+  leftText?: string;
+  rightText?: string;
+  leftStats?: StatItem[];
+  rightStats?: StatItem[];
 }) => {
-  const text = `A central place to find projects and connect with verified contractors`;
+  const text = leftText;
   const [mounted, setMounted] = useState(false);
   const randomWidth = useMemo(() => Math.random() * 100, [mounted]);
 
@@ -100,12 +186,14 @@ export const ConnectYourTooklsSkeleton = ({
       >
         <div className="absolute -top-4 -right-4 flex h-14 w-14 items-center justify-center rounded-lg bg-white shadow-xl">
           <Scale />
-          <TenderHubLogo className="relative z-20 h-8 w-8" />
+          {leftCornerLogo ?? (
+            <TenderHubLogo className="relative z-20 h-8 w-8" />
+          )}
         </div>
         <div className="mt-12 flex items-center gap-2">
-          <IntegrationsLogo />
+          {leftHeaderLogo ?? <IntegrationsLogo />}
           <span className="text-charcoal-700 text-sm font-medium dark:text-neutral-200">
-            TenderHub
+            {leftTitle}
           </span>
         </div>
         <DivideX className="mt-2" />
@@ -136,11 +224,7 @@ export const ConnectYourTooklsSkeleton = ({
           </div>
         </div>
         <div className="mt-2 flex flex-col">
-          {[
-            { number: "160", label: "Planning Phase" },
-            { number: "240", label: "Projects Award" },
-            { number: "900", label: "Approved Contractors" },
-          ].map((item, index) => (
+          {leftStats.map((item, index) => (
             <div
               key={`${item.number}-${item.label}`}
               className="mt-2 flex items-center gap-2"
@@ -187,26 +271,26 @@ export const ConnectYourTooklsSkeleton = ({
       >
         <div className="absolute -top-4 -left-4 flex h-14 w-14 items-center justify-center rounded-lg bg-white shadow-xl dark:bg-neutral-800">
           <Scale />
-          <IntelliBidLogo className="relative z-20 h-8 w-8" />
+          {rightCornerLogo ?? (
+            <IntelliBidLogo className="relative z-20 h-8 w-8" />
+          )}
         </div>
         <div className="mt-12 flex items-center gap-2">
-          <IntegrationsLogo className="dark:text-neutral-200" />
+          {rightHeaderLogo ?? (
+            <IntegrationsLogo className="dark:text-neutral-200" />
+          )}
           <span className="text-charcoal-700 text-xs font-medium md:text-sm dark:text-neutral-200">
-            IntelliBid
+            {rightTitle}
           </span>
         </div>
         <DivideX className="mt-2" />
         <div className="mt-4">
           <span className="text-charcoal-700 text-[10px] leading-loose font-normal md:text-xs dark:text-neutral-200">
-            An automation engine to calculate bids and generate proposals.
+            {rightText}
           </span>
         </div>
         <div className="mt-2 flex flex-col">
-          {[
-            { number: "160", label: "Drawing Processed" },
-            { number: "59", label: "Proposal Prepared" },
-            { number: "26", label: "Bidding Completed" },
-          ].map((item, index) => (
+          {rightStats.map((item, index) => (
             <div
               key={`${item.number}-${item.label}-right`}
               className="mt-2 flex items-center gap-2"
