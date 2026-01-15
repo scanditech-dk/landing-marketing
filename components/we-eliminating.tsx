@@ -112,15 +112,15 @@ const FlippingText = ({
 };
 
 export function TextAnimationFlippingWords() {
-  const words = ["Next.js", "Tailwind CSS", "Motion", "Typescript", "Web GL"];
+  const words = ["Data silos", "Manual measurements", "Constant delays", "Measurements", "Web GL"];
 
   return (
     <section className="relative w-full">
       <DottedBackground className="z-0" />
-      <div className="relative mx-auto grid w-full max-w-7xl grid-cols-1 items-center gap-10 px-4 py-20 md:grid-cols-2 md:px-8">
+      <div className="relative mx-auto grid w-full max-w-7xl grid-cols-1 items-center gap-10 px-4 py-20 lg:grid-cols-2 md:px-8">
       <div className="relative z-10">
         <h1 className="mb-4 text-left text-2xl font-bold md:text-5xl">
-          Built with <FlippingText words={words} />
+          We are replacing <FlippingText words={words} />
         </h1>
         <p className="mt-4 text-left text-base text-neutral-600 dark:text-neutral-400">
           Create stunning animations that bring your website to life. Elevate
@@ -131,55 +131,16 @@ export function TextAnimationFlippingWords() {
         <LogoCloud />
       </div>
       <div className="relative z-10">
-        <IphoneMockup>
-        <div className="flex flex-col space-y-4 overflow-y-auto p-4">
-          {[
-            {
-              title: "Getting Started",
-              description: "Learn how to build your first animation in minutes",
-              icon: "🚀",
-            },
-            {
-              title: "Advanced Techniques",
-              description:
-                "Take your animations to the next level with these pro tips",
-              icon: "⚡",
-            },
-            {
-              title: "Performance Tips",
-              description: "Optimize your animations for smooth rendering",
-              icon: "⚙️",
-            },
-            {
-              title: "Animation Library",
-              description: "Browse our collection of pre-built animations",
-              icon: "📚",
-            },
-            {
-              title: "Community Showcase",
-              description: "See what others are building with our tools",
-              icon: "🌟",
-            },
-          ].map((card, index) => (
-            <div
-              key={index}
-              className="rounded-xl bg-white p-4 shadow-md transition-all hover:shadow-lg dark:bg-neutral-800"
-            >
-              <div className="flex items-start space-x-3">
-                <div className="text-xl">{card.icon}</div>
-                <div>
-                  <h3 className="font-medium text-neutral-900 dark:text-neutral-100">
-                    {card.title}
-                  </h3>
-                  <p className="text-sm text-neutral-500 dark:text-neutral-400">
-                    {card.description}
-                  </p>
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
-        </IphoneMockup>
+        <img
+          src="/dashboard-light.webp"
+          alt="Product dashboard"
+          className="w-full rounded-2xl shadow-xl dark:hidden"
+        />
+        <img
+          src="/dashboard-dark.webp"
+          alt="Product dashboard"
+          className="hidden w-full rounded-2xl shadow-xl dark:block"
+        />
       </div>
     </div>
     </section>
