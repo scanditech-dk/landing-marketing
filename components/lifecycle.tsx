@@ -10,7 +10,7 @@ export function LifecycleTimeline() {
       title: "Strategic Acquisition",
       content: (
         <div>
-          <p className="mb-8 text-xs font-normal text-neutral-800 md:text-sm dark:text-neutral-200">
+          <p className="mb-8 text-sm font-semibold text-neutral-900 md:text-base dark:text-neutral-100">
             Opportunity & Precision
           </p>
           <div className="relative mx-auto h-80 w-full overflow-hidden sm:w-160 lg:mx-0 lg:max-h-[370px]">

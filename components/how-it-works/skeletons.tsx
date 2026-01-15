@@ -10,6 +10,7 @@ import {
   OpenAILogo,
   SlackLogo,
   TenderHubLogo,
+  IntelliBidLogo,
 } from "@/icons/general";
 import { cn } from "@/lib/utils";
 import React, { useEffect, useMemo, useRef, useState } from "react";
@@ -135,17 +136,15 @@ export const ConnectYourTooklsSkeleton = ({
           </div>
         </div>
         <div className="mt-2 flex flex-col">
-          {[...Array(2)].map((_, index) => (
+          {[
+            { number: "160", label: "Planning Phase" },
+            { number: "240", label: "Projects Award" },
+            { number: "900", label: "Approved Contractors" },
+          ].map((item, index) => (
             <div
-              key={`width-bar-right-${index}`}
+              key={`${item.number}-${item.label}`}
               className="mt-2 flex items-center gap-2"
             >
-              <span className="text-[10px] font-medium text-neutral-500 dark:text-neutral-400">
-                {index + 1}.
-              </span>
-              <span className="text-[10px] text-neutral-500 dark:text-neutral-400">
-                Step
-              </span>
               <motion.div
                 initial={{
                   width: "0%",
@@ -162,6 +161,9 @@ export const ConnectYourTooklsSkeleton = ({
                 }}
                 className="h-4 w-full rounded-full bg-gray-200 dark:bg-neutral-800"
               />
+              <span className="whitespace-nowrap text-[10px] text-neutral-500 dark:text-neutral-400">
+                <span className="font-medium">{item.number}</span> {item.label}
+              </span>
             </div>
           ))}
         </div>
@@ -185,54 +187,30 @@ export const ConnectYourTooklsSkeleton = ({
       >
         <div className="absolute -top-4 -left-4 flex h-14 w-14 items-center justify-center rounded-lg bg-white shadow-xl dark:bg-neutral-800">
           <Scale />
-          <LogoSVG className="relative z-20 h-8 w-8" />
+          <IntelliBidLogo className="relative z-20 h-8 w-8" />
         </div>
         <div className="mt-12 flex items-center gap-2">
           <IntegrationsLogo className="dark:text-neutral-200" />
           <span className="text-charcoal-700 text-xs font-medium md:text-sm dark:text-neutral-200">
-            Integrations
-          </span>
-          <span className="text-charcoal-700 rounded-lg border border-gray-200 bg-gray-50 px-2 py-0.5 text-xs dark:border-neutral-600 dark:bg-neutral-800 dark:text-neutral-200">
-            200
+            IntelliBid
           </span>
         </div>
         <DivideX className="mt-2" />
-        <div className="mt-4 flex items-center justify-between gap-2">
-          <div className="flex items-center gap-2">
-            <OpenAILogo className="h-4 w-4 shrink-0" />
-            <span className="text-charcoal-700 text-xs font-medium md:text-sm dark:text-neutral-200">
-              ChatGPT
-            </span>
-          </div>
-
-          <div className="rounded-sm border border-blue-500 bg-blue-50 px-2 py-0.5 text-xs text-blue-500">
-            Connected
-          </div>
-        </div>
-        <div className="mt-4 flex items-center justify-between gap-2">
-          <div className="flex items-center gap-2">
-            <AnthropicLogo className="h-4 w-4 shrink-0" />
-            <span className="text-charcoal-700 text-xs font-medium md:text-sm dark:text-neutral-200">
-              Claude 4 Opus
-            </span>
-          </div>
-
-          <div className="rounded-sm border border-blue-500 bg-blue-50 px-2 py-0.5 text-xs text-blue-500">
-            Connected
-          </div>
+        <div className="mt-4">
+          <span className="text-charcoal-700 text-[10px] leading-loose font-normal md:text-xs dark:text-neutral-200">
+            An automation engine to calculate bids and generate proposals.
+          </span>
         </div>
         <div className="mt-2 flex flex-col">
-          {[...Array(3)].map((_, index) => (
+          {[
+            { number: "160", label: "Drawing Processed" },
+            { number: "59", label: "Proposal Prepared" },
+            { number: "26", label: "Bidding Completed" },
+          ].map((item, index) => (
             <div
-              key={`width-bar-right-${index}`}
+              key={`${item.number}-${item.label}-right`}
               className="mt-2 flex items-center gap-2"
             >
-              <span className="text-[10px] font-medium text-neutral-500 dark:text-neutral-400">
-                {index + 1}.
-              </span>
-              <span className="text-[10px] text-neutral-500 dark:text-neutral-400">
-                Step
-              </span>
               <motion.div
                 initial={{
                   width: `${20 + Math.random() * 20}%`,
@@ -249,6 +227,9 @@ export const ConnectYourTooklsSkeleton = ({
                 }}
                 className="h-4 w-full rounded-full bg-gray-200 dark:bg-neutral-800"
               />
+              <span className="whitespace-nowrap text-[10px] text-neutral-500 dark:text-neutral-400">
+                <span className="font-medium">{item.number}</span> {item.label}
+              </span>
             </div>
           ))}
         </div>
