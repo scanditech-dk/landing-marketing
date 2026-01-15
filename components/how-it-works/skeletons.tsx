@@ -9,6 +9,7 @@ import {
   MetaLogo,
   OpenAILogo,
   SlackLogo,
+  TenderHubLogo,
 } from "@/icons/general";
 import { cn } from "@/lib/utils";
 import React, { useEffect, useMemo, useRef, useState } from "react";
@@ -65,8 +66,14 @@ export const DesignYourWorkflowSkeleton = () => {
   );
 };
 
-export const ConnectYourTooklsSkeleton = () => {
-  const text = `Write the first and second rule of it using Claude and ChatGPT.`;
+export const ConnectYourTooklsSkeleton = ({
+  compact = false,
+  className,
+}: {
+  compact?: boolean;
+  className?: string;
+}) => {
+  const text = `A central place to find projects and connect with verified contractors`;
   const [mounted, setMounted] = useState(false);
   const randomWidth = useMemo(() => Math.random() * 100, [mounted]);
 
@@ -77,7 +84,13 @@ export const ConnectYourTooklsSkeleton = () => {
   if (!mounted) return null;
 
   return (
-    <div className="relative flex h-full w-full items-center justify-between">
+    <div
+      className={cn(
+        "relative flex h-full items-center",
+        compact ? "w-fit gap-10" : "w-full justify-between",
+        className,
+      )}
+    >
       <motion.div
         initial={{ y: -20, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
@@ -86,12 +99,12 @@ export const ConnectYourTooklsSkeleton = () => {
       >
         <div className="absolute -top-4 -right-4 flex h-14 w-14 items-center justify-center rounded-lg bg-white shadow-xl">
           <Scale />
-          <OpenAILogo className="relative z-20 h-8 w-8" />
+          <TenderHubLogo className="relative z-20 h-8 w-8" />
         </div>
         <div className="mt-12 flex items-center gap-2">
           <IntegrationsLogo />
           <span className="text-charcoal-700 text-sm font-medium dark:text-neutral-200">
-            Tasks
+            TenderHub
           </span>
         </div>
         <DivideX className="mt-2" />
@@ -123,23 +136,33 @@ export const ConnectYourTooklsSkeleton = () => {
         </div>
         <div className="mt-2 flex flex-col">
           {[...Array(2)].map((_, index) => (
-            <motion.div
+            <div
               key={`width-bar-right-${index}`}
-              initial={{
-                width: "0%",
-              }}
-              animate={{
-                width: `${randomWidth}%`,
-              }}
-              transition={{
-                duration: 4,
-                delay: index * 0.2,
-                ease: "easeInOut",
-                repeat: Infinity,
-                repeatType: "reverse",
-              }}
-              className="mt-2 h-4 w-full rounded-full bg-gray-200 dark:bg-neutral-800"
-            />
+              className="mt-2 flex items-center gap-2"
+            >
+              <span className="text-[10px] font-medium text-neutral-500 dark:text-neutral-400">
+                {index + 1}.
+              </span>
+              <span className="text-[10px] text-neutral-500 dark:text-neutral-400">
+                Step
+              </span>
+              <motion.div
+                initial={{
+                  width: "0%",
+                }}
+                animate={{
+                  width: `${randomWidth}%`,
+                }}
+                transition={{
+                  duration: 4,
+                  delay: index * 0.2,
+                  ease: "easeInOut",
+                  repeat: Infinity,
+                  repeatType: "reverse",
+                }}
+                className="h-4 w-full rounded-full bg-gray-200 dark:bg-neutral-800"
+              />
+            </div>
           ))}
         </div>
       </motion.div>
@@ -200,23 +223,33 @@ export const ConnectYourTooklsSkeleton = () => {
         </div>
         <div className="mt-2 flex flex-col">
           {[...Array(3)].map((_, index) => (
-            <motion.div
+            <div
               key={`width-bar-right-${index}`}
-              initial={{
-                width: `${20 + Math.random() * 20}%`,
-              }}
-              animate={{
-                width: `${70 + Math.random() * 30}%`,
-              }}
-              transition={{
-                duration: 4,
-                delay: index * 0.2,
-                ease: "easeInOut",
-                repeat: Infinity,
-                repeatType: "reverse",
-              }}
-              className="mt-2 h-4 w-full rounded-full bg-gray-200 dark:bg-neutral-800"
-            />
+              className="mt-2 flex items-center gap-2"
+            >
+              <span className="text-[10px] font-medium text-neutral-500 dark:text-neutral-400">
+                {index + 1}.
+              </span>
+              <span className="text-[10px] text-neutral-500 dark:text-neutral-400">
+                Step
+              </span>
+              <motion.div
+                initial={{
+                  width: `${20 + Math.random() * 20}%`,
+                }}
+                animate={{
+                  width: `${70 + Math.random() * 30}%`,
+                }}
+                transition={{
+                  duration: 4,
+                  delay: index * 0.2,
+                  ease: "easeInOut",
+                  repeat: Infinity,
+                  repeatType: "reverse",
+                }}
+                className="h-4 w-full rounded-full bg-gray-200 dark:bg-neutral-800"
+              />
+            </div>
           ))}
         </div>
       </motion.div>
