@@ -125,6 +125,120 @@ type StatItem = {
   label: string;
 };
 
+type IntegrationCardProps = {
+  title: string;
+  textValue: string;
+  stats: StatItem[];
+  cornerLogo?: React.ReactNode;
+  headerLogo?: React.ReactNode;
+  delay?: number;
+  logoPosition?: "top-left" | "top-right";
+  defaultCornerLogo?: React.ReactNode;
+  animateText?: boolean;
+  className?: string;
+};
+
+const IntegrationCard = ({
+  title,
+  textValue,
+  stats,
+  cornerLogo,
+  headerLogo,
+  delay = 0,
+  logoPosition = "top-right",
+  defaultCornerLogo,
+  animateText = false,
+  className,
+}: IntegrationCardProps) => {
+  const logoPositionClasses = {
+    "top-left": "-top-4 -left-4",
+    "top-right": "-top-4 -right-4",
+  };
+
+  return (
+    <motion.div
+      initial={{ y: -20, opacity: 0 }}
+      animate={{ y: 0, opacity: 1 }}
+      transition={{ duration: 0.5, delay }}
+      className={cn(
+        "relative w-full max-w-[240px] overflow-visible rounded-2xl border-t border-gray-300 bg-white p-4 shadow-2xl dark:border-neutral-700 dark:bg-neutral-900",
+        "sm:max-w-[260px]",
+        className,
+      )}
+    >
+      {/* Corner Logo */}
+      <div
+        className={cn(
+          "absolute flex h-14 w-14 items-center justify-center rounded-lg bg-white shadow-xl dark:bg-neutral-800",
+          logoPositionClasses[logoPosition],
+        )}
+      >
+        <Scale />
+        <div className="relative z-20">
+          {cornerLogo ?? defaultCornerLogo ?? <TenderHubLogo className="h-8 w-8" />}
+        </div>
+      </div>
+
+      {/* Header */}
+      <div className="mt-12 flex items-center gap-2">
+        {headerLogo ?? <IntegrationsLogo className="dark:text-neutral-200" />}
+        <span className="text-charcoal-700 text-xs font-medium sm:text-sm dark:text-neutral-200">
+          {title}
+        </span>
+      </div>
+      <DivideX className="mt-2" />
+
+      {/* Description Text */}
+      <div className="mt-4">
+        {animateText ? (
+          <span className="text-charcoal-700 text-[10px] leading-loose font-normal sm:text-xs dark:text-neutral-200">
+            {textValue.split(/(\s+)/).map((word, index) => (
+              <motion.span
+                key={index}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{
+                  duration: 0.2,
+                  delay: index * 0.02,
+                  ease: "linear",
+                }}
+                className="inline-block"
+              >
+                {word === " " ? "\u00A0" : word}
+              </motion.span>
+            ))}
+          </span>
+        ) : (
+          <span className="text-charcoal-700 text-[10px] leading-loose font-normal sm:text-xs dark:text-neutral-200">
+            {textValue}
+          </span>
+        )}
+      </div>
+
+      {/* Stats List */}
+      <div className="mt-2 flex flex-col">
+        {stats.map((item, index) => (
+          <div key={`${item.number}-${item.label}-${index}`} className="mt-2 flex items-center gap-2">
+            <div className="h-2 w-2 shrink-0 rounded-full bg-blue-500" />
+            <span className="text-[10px] text-neutral-500 dark:text-neutral-400">
+              {item.number && <span className="font-medium">{item.number}</span>}
+              {item.number ? " " : null}
+              {item.label}
+            </span>
+          </div>
+        ))}
+      </div>
+
+      {/* Footer CTA */}
+      <div className="mt-4 flex justify-end">
+        <span className="text-[10px] text-neutral-400 dark:text-neutral-500 cursor-pointer hover:text-neutral-600 dark:hover:text-neutral-400">
+          Explore →
+        </span>
+      </div>
+    </motion.div>
+  );
+};
+
 export const ConnectYourTooklsSkeleton = ({
   compact = false,
   className,
@@ -172,14 +286,7 @@ export const ConnectYourTooklsSkeleton = ({
   rightStats?: StatItem[];
   topStats?: StatItem[];
 }) => {
-  const text = leftText;
   const [mounted, setMounted] = useState(false);
-  const randomWidth = useMemo(() => Math.random() * 100, [mounted]);
-  const resolvedTopTitle = topTitle ?? leftTitle;
-  const resolvedTopText = topText ?? leftText;
-  const resolvedTopStats = topStats ?? leftStats;
-  const resolvedTopCornerLogo = topCornerLogo ?? leftCornerLogo;
-  const resolvedTopHeaderLogo = topHeaderLogo ?? leftHeaderLogo;
 
   useEffect(() => {
     setMounted(true);
@@ -187,234 +294,94 @@ export const ConnectYourTooklsSkeleton = ({
 
   if (!mounted) return null;
 
-  const renderLeftCard = ({
-    title,
-    textValue,
-    stats,
-    cornerLogo,
-    headerLogo,
-    cardClassName,
-    delay,
-    logoPosition = "-top-4 -right-4",
-  }: {
-    title: string;
-    textValue: string;
-    stats: StatItem[];
-    cornerLogo?: React.ReactNode;
-    headerLogo?: React.ReactNode;
-    cardClassName?: string;
-    delay: number;
-    logoPosition?: string;
-  }) => (
-    <motion.div
-      initial={{ y: -20, opacity: 0 }}
-      animate={{ y: 0, opacity: 1 }}
-      transition={{ duration: 0.5, delay }}
-      className={cn(
-        "relative h-70 w-60 rounded-2xl border-t border-gray-300 bg-white p-4 shadow-2xl dark:border-neutral-700 dark:bg-neutral-900",
-        cardClassName,
-      )}
-    >
-      <div className={cn("absolute flex h-14 w-14 items-center justify-center rounded-lg bg-white shadow-xl", logoPosition)}>
-        <Scale />
-        {cornerLogo ? <div className="relative z-20">{cornerLogo}</div> : <TenderHubLogo className="relative z-20 h-8 w-8" />}
-      </div>
-      <div className="mt-12 flex items-center gap-2">
-        {headerLogo ?? <IntegrationsLogo />}
-        <span className="text-charcoal-700 text-sm font-medium dark:text-neutral-200">
-          {title}
-        </span>
-      </div>
-      <DivideX className="mt-2" />
+  // Resolve top card props (only used in stacked layout)
+  // Top card is shown when layout is "stacked" - it's optional based on whether topTitle is provided
+  const showTopCard = layout === "stacked" && (topTitle || topText || topStats || topCornerLogo || topHeaderLogo);
+  const resolvedTopTitle = topTitle ?? leftTitle;
+  const resolvedTopText = topText ?? leftText;
+  const resolvedTopStats = topStats ?? leftStats;
+  const resolvedTopCornerLogo = topCornerLogo ?? leftCornerLogo;
+  const resolvedTopHeaderLogo = topHeaderLogo ?? leftHeaderLogo;
 
-      <div className="mt-4 flex items-center justify-between gap-2">
-        <div className="flex items-center gap-2">
-          <span className="text-charcoal-700 text-[10px] leading-loose font-normal md:text-xs dark:text-neutral-200">
-            {textValue.split(/(\s+)/).map((word, index) => (
-              <motion.span
-                key={index}
-                initial={{
-                  opacity: 0,
-                }}
-                animate={{
-                  opacity: 1,
-                }}
-                transition={{
-                  duration: 0.2,
-                  delay: index * 0.02,
-                  ease: "linear",
-                }}
-                className="inline-block"
-              >
-                {word === " " ? "\u00A0" : word}
-              </motion.span>
-            ))}
-          </span>
-        </div>
-      </div>
-      <div className="mt-2 flex flex-col">
-        {stats.map((item, index) => (
-          <div
-            key={`${item.number}-${item.label}`}
-            className="mt-2 flex items-center gap-2"
-          >
-            <div className="h-2 w-2 rounded-full bg-blue-500" />
-            <span className="whitespace-nowrap text-[10px] text-neutral-500 dark:text-neutral-400">
-              {item.number && <span className="font-medium">{item.number}</span>}
-              {item.number ? " " : null}
-              {item.label}
-            </span>
-          </div>
-        ))}
-      </div>
-      <div className="mt-4 flex justify-end">
-        <span className="text-[10px] text-neutral-400 dark:text-neutral-500 cursor-pointer hover:text-neutral-600 dark:hover:text-neutral-400">
-          Explore →
-        </span>
-      </div>
-    </motion.div>
-  );
-
-  const renderRightCard = ({
-    title,
-    textValue,
-    stats,
-    cornerLogo,
-    headerLogo,
-    cardClassName,
-    delay,
-    logoPosition = "-top-4 -left-4",
-  }: {
-    title: string;
-    textValue: string;
-    stats: StatItem[];
-    cornerLogo?: React.ReactNode;
-    headerLogo?: React.ReactNode;
-    cardClassName?: string;
-    delay: number;
-    logoPosition?: string;
-  }) => (
-    <motion.div
-      initial={{ y: -20, opacity: 0 }}
-      animate={{ y: 0, opacity: 1 }}
-      transition={{ duration: 0.5, delay }}
-      className={cn(
-        "relative h-70 w-60 rounded-2xl border-t border-gray-300 bg-white p-4 shadow-2xl dark:border-neutral-700 dark:bg-neutral-900",
-        cardClassName,
-      )}
-    >
-      <div className={cn("absolute flex h-14 w-14 items-center justify-center rounded-lg bg-white shadow-xl dark:bg-neutral-800", logoPosition)}>
-        <Scale />
-        {cornerLogo ? <div className="relative z-20">{cornerLogo}</div> : <IntelliBidLogo className="relative z-20 h-8 w-8" />}
-      </div>
-      <div className="mt-12 flex items-center gap-2">
-        {headerLogo ?? <IntegrationsLogo className="dark:text-neutral-200" />}
-        <span className="text-charcoal-700 text-xs font-medium md:text-sm dark:text-neutral-200">
-          {title}
-        </span>
-      </div>
-      <DivideX className="mt-2" />
-      <div className="mt-4">
-        <span className="text-charcoal-700 text-[10px] leading-loose font-normal md:text-xs dark:text-neutral-200">
-          {textValue}
-        </span>
-      </div>
-      <div className="mt-2 flex flex-col">
-        {stats.map((item, index) => (
-          <div
-            key={`${item.number}-${item.label}-right`}
-            className="mt-2 flex items-center gap-2"
-          >
-            <div className="h-2 w-2 rounded-full bg-blue-500" />
-            <span className="whitespace-nowrap text-[10px] text-neutral-500 dark:text-neutral-400">
-              {item.number && <span className="font-medium">{item.number}</span>}
-              {item.number ? " " : null}
-              {item.label}
-            </span>
-          </div>
-        ))}
-      </div>
-      <div className="mt-4 flex justify-end">
-        <span className="text-[10px] text-neutral-400 dark:text-neutral-500 cursor-pointer hover:text-neutral-600 dark:hover:text-neutral-400">
-          Explore →
-        </span>
-      </div>
-    </motion.div>
-  );
-
+  // Stacked layout with optional top card
   if (layout === "stacked") {
     return (
-      <div className={cn("relative flex h-full w-full flex-col items-center", className)}>
-        {renderLeftCard({
-          title: resolvedTopTitle,
-          textValue: resolvedTopText,
-          stats: resolvedTopStats,
-          cornerLogo: resolvedTopCornerLogo,
-          headerLogo: resolvedTopHeaderLogo,
-          delay: 0,
-        })}
-        <div className="mt-8 flex flex-col md:flex-row w-full max-w-[520px] md:justify-between gap-4 md:gap-0">
-          {renderLeftCard({
-            title: leftTitle,
-            textValue: text,
-            stats: leftStats,
-            cornerLogo: leftCornerLogo,
-            headerLogo: leftHeaderLogo,
-            cardClassName: "md:translate-x-0",
-            delay: 0.2,
-            logoPosition: "-top-4 -left-4",
-          })}
-          {renderRightCard({
-            title: rightTitle,
-            textValue: rightText,
-            stats: rightStats,
-            cornerLogo: rightCornerLogo,
-            headerLogo: rightHeaderLogo,
-            cardClassName: "md:translate-x-0",
-            delay: 0.4,
-            logoPosition: "-top-4 -right-4",
-          })}
+      <div className={cn("relative flex w-full flex-col items-center gap-6 sm:gap-8", className)}>
+        {/* Optional Top Card - shown if any top-specific props are provided */}
+        {showTopCard && (
+          <IntegrationCard
+            title={resolvedTopTitle}
+            textValue={resolvedTopText}
+            stats={resolvedTopStats}
+            cornerLogo={resolvedTopCornerLogo}
+            headerLogo={resolvedTopHeaderLogo}
+            delay={0}
+            logoPosition="top-right"
+            animateText={false}
+          />
+        )}
+
+        {/* Bottom Two Cards */}
+        <div className="flex w-full flex-col items-center gap-6 sm:flex-row sm:justify-center sm:gap-6 md:gap-8">
+          <IntegrationCard
+            title={leftTitle}
+            textValue={leftText}
+            stats={leftStats}
+            cornerLogo={leftCornerLogo}
+            headerLogo={leftHeaderLogo}
+            delay={showTopCard ? 0.2 : 0}
+            logoPosition="top-left"
+            defaultCornerLogo={<TenderHubLogo className="h-8 w-8" />}
+            animateText={false}
+          />
+          <IntegrationCard
+            title={rightTitle}
+            textValue={rightText}
+            stats={rightStats}
+            cornerLogo={rightCornerLogo}
+            headerLogo={rightHeaderLogo}
+            delay={showTopCard ? 0.4 : 0.2}
+            logoPosition="top-right"
+            defaultCornerLogo={<IntelliBidLogo className="h-8 w-8" />}
+            animateText={false}
+          />
         </div>
       </div>
     );
   }
 
+  // Side-by-side layout (two cards)
   return (
     <div
       className={cn(
-        "relative flex h-full items-center",
-        compact ? "w-fit gap-10" : "w-full justify-between",
+        "flex w-full flex-col items-center gap-4 sm:flex-row sm:justify-center sm:gap-6 md:gap-8 lg:gap-10",
+        compact && "w-fit",
         className,
       )}
     >
-      {renderLeftCard({
-        title: leftTitle,
-        textValue: text,
-        stats: leftStats,
-        cornerLogo: leftCornerLogo,
-        headerLogo: leftHeaderLogo,
-        cardClassName: "-translate-x-2 md:translate-x-0",
-        delay: 0,
-      })}
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 1, delay: 1 }}
-        className="absolute inset-x-0 z-30 hidden items-center justify-center md:flex"
-      >
-        <div className="size-3 rounded-full border-2 border-blue-500 bg-white dark:bg-neutral-800" />
-        <div className="h-[2px] w-38 bg-blue-500" />
-        <div className="size-3 rounded-full border-2 border-blue-500 bg-white dark:bg-neutral-800" />
-      </motion.div>
-      {renderRightCard({
-        title: rightTitle,
-        textValue: rightText,
-        stats: rightStats,
-        cornerLogo: rightCornerLogo,
-        headerLogo: rightHeaderLogo,
-        cardClassName: "translate-x-10 md:translate-x-0",
-        delay: 1,
-      })}
+      <IntegrationCard
+        title={leftTitle}
+        textValue={leftText}
+        stats={leftStats}
+        cornerLogo={leftCornerLogo}
+        headerLogo={leftHeaderLogo}
+        delay={0}
+        logoPosition="top-left"
+        defaultCornerLogo={<TenderHubLogo className="h-8 w-8" />}
+        animateText={true}
+      />
+
+      <IntegrationCard
+        title={rightTitle}
+        textValue={rightText}
+        stats={rightStats}
+        cornerLogo={rightCornerLogo}
+        headerLogo={rightHeaderLogo}
+        delay={0.2}
+        logoPosition="top-right"
+        defaultCornerLogo={<IntelliBidLogo className="h-8 w-8" />}
+        animateText={false}
+      />
     </div>
   );
 };

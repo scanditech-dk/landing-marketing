@@ -3,6 +3,7 @@ import { Container } from "@/components/container";
 import { ConnectYourTooklsSkeleton } from "@/components/how-it-works/skeletons";
 import { Timeline } from "@/components/ui/timeline";
 import { InspecLogo, MRMSLogo, ProjectFlowLogo, ServiceLogo, TimesyncLogo } from "@/icons/general";
+import { Security } from "@/components/security";
 
 export function LifecycleTimeline() {
   const data = [
@@ -10,11 +11,11 @@ export function LifecycleTimeline() {
       id: "strategic-acquisitions",
       title: "Strategic Acquisition",
       content: (
-        <div>
+        <div className="pb-8 sm:pb-0">
           <p className="mb-8 text-sm font-semibold text-neutral-900 md:text-base dark:text-neutral-100">
             Opportunity & Precision
           </p>
-          <div className="relative mx-auto h-80 w-full overflow-hidden sm:w-160 lg:mx-0 lg:max-h-[370px]">
+          <div className="relative mx-auto w-full overflow-visible sm:w-160 sm:h-80 lg:mx-0 lg:max-h-[370px]">
             <ConnectYourTooklsSkeleton />
           </div>
         </div>
@@ -24,7 +25,7 @@ export function LifecycleTimeline() {
       id: "intelligent-execution",
       title: "Intelligent Execution",
       content: (
-        <div>
+        <div className="pb-8 sm:pb-0">
           <p className="mb-8 text-sm font-semibold text-neutral-900 md:text-base dark:text-neutral-100">
             Autonomous Field Management
           </p>
@@ -70,11 +71,11 @@ export function LifecycleTimeline() {
       id: "inventory-service",
       title: "Asset Continuity",
       content: (
-        <div>
+        <div className="pb-8 sm:pb-0">
           <p className="mb-8 text-sm font-semibold text-neutral-900 md:text-base dark:text-neutral-100">
             Resource & Lifecycle Control
           </p>
-          <div className="relative mx-auto h-80 w-full overflow-hidden sm:w-160 lg:mx-0 lg:max-h-[370px]">
+          <div className="relative mx-auto w-full overflow-visible sm:w-160 sm:h-80 lg:mx-0 lg:max-h-[370px]">
             <ConnectYourTooklsSkeleton
               
               leftCornerLogo={
@@ -105,10 +106,13 @@ export function LifecycleTimeline() {
     },
   ];
   return (
-    <Container className="border-divide border-x">
-      <div className="relative w-full overflow-clip">
-        <Timeline data={data} />
-      </div>
-    </Container>
+    <>
+      <Container className="border-divide border-x">
+        <div className="relative w-full overflow-clip">
+          <Timeline data={data} />
+        </div>
+      </Container>
+      <Security />
+    </>
   );
 }

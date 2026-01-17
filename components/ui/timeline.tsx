@@ -65,7 +65,7 @@ export const Timeline = ({ data }: { data: TimelineEntry[] }) => {
         {data.map((item, index) => (
           <div
             key={`${item.id ?? item.title ?? "item"}-${index}`}
-            className="flex flex-col justify-start pt-10 lg:flex-row lg:pt-40 lg:gap-10"
+            className="flex flex-col justify-start pt-10 pb-8 sm:pb-12 lg:flex-row lg:pt-40 lg:pb-0 lg:gap-10"
           >
             <div className="z-40 flex max-w-xs flex-col items-center self-start lg:sticky lg:top-40 lg:w-full lg:flex-row lg:max-w-sm">
               <div className="h-10 absolute left-3 md:left-3 w-10 rounded-full bg-white dark:bg-black flex items-center justify-center">
@@ -76,7 +76,7 @@ export const Timeline = ({ data }: { data: TimelineEntry[] }) => {
               </h3>
             </div>
 
-            <div className="relative mt-6 w-full pl-20 pr-4 lg:mt-0 lg:pl-4">
+            <div className="relative mt-6 mb-4 w-full pl-20 pr-4 lg:mt-0 lg:mb-0 lg:pl-4">
               <h3 className="md:hidden block text-2xl mb-4 text-left font-bold text-neutral-500 dark:text-neutral-500">
                 {item.title}
               </h3>
