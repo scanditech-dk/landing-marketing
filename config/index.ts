@@ -1,11 +1,11 @@
 const config = {
   websiteName:
-    "Notus: Build and Manage AI-Driven Agentic Workflows | Aceternity UI Pro Template",
+    "Bylt: One Platform for the Entire Construction Life cycle",
   websiteUrl:
     process.env.NEXT_PUBLIC_WEBSITE_URL ||
     "https://notus-agent-marketing-template.vercel.app/",
   websiteDescription:
-    "Empower your technical teams to create, simulate and manage AI-driven workflows visually. Notus provides an intuitive platform for developing and testing agentic systems, helping you build the next generation of intelligent applications with confidence.",
+    "Bylt isn’t just a tool—it’s your project’s nervous system. Our integrated ecosystem ensures every module, stakeholder, and data point syncs to a single, unified brain",
 };
 
 export default config;
